@@ -15,7 +15,7 @@ const Navbar = () => {
       <Link href="/">
         <div className="w-[100px] md:w-[130px] md:h-[40px] h-[38px]">
           <Image className="cursor-pointer" src={Logo} alt="tiktok" layout="responsive"/>
-        </div>
+        </div> 
       </Link>
     </div>
   );
