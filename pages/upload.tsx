@@ -7,12 +7,20 @@ import { SanityAssetDocument } from "@sanity/client";
 
 import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
-import { topics } from "../utils/constants"
+import { topics } from "../utils/constants";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [videoAsset, setVideoAsset] = useState<SanityAssetDocument | undefined>();
+  const [videoAsset, setVideoAsset] = useState<
+    SanityAssetDocument | undefined
+  >();
   const [wrongFileType, setWrongFileType] = useState(false);
+  const [caption, setCaption] = useState("");
+  const [category, setCategory] = useState(topics[0].name);
+  const [savingPost, setSavingPost] = useState(false);
+
+  const { userProfile }: { userProfile: any } = useAuthStore();
+  const router = useRouter();
 
   const uploadVideo = async (e: any) => {
     const selectedFile = e.target.files[0];
@@ -20,25 +28,50 @@ const Upload = () => {
 
     // If user uploads video with right format
     if (fileTypes.includes(selectedFile.type)) {
-
-        client.assets.upload('file', selectedFile, {
-            contentType: selectedFile.type,
-            filename: selectedFile.name,
+      client.assets
+        .upload("file", selectedFile, {
+          contentType: selectedFile.type,
+          filename: selectedFile.name,
         })
         .then((data) => {
-            setVideoAsset(data);
-            setIsLoading(false);
-        })
-
+          setVideoAsset(data);
+          setIsLoading(false);
+        });
     } else {
-      
-        setIsLoading(false);
-        setWrongFileType(true);
-
+      setIsLoading(false);
+      setWrongFileType(true);
     }
   };
 
-//   console.log(wrongFileType);
+  const handlePost = async () => {
+    if (caption && videoAsset?._id && category) {
+      setSavingPost(true);
+
+      const document = {
+        _type: "post",
+        caption,
+        video: {
+          _type: "file",
+          asset: {
+            _type: "reference",
+            _ref: videoAsset?._id,
+          },
+        },
+        userId: userProfile?._id,
+        postedBy: {
+          _type: "postedBy",
+          _ref: userProfile?._id,
+        },
+        topic: category,
+      };
+
+      await axios.post("http://localhost:3000/api/post", document);
+
+      router.push('/');
+    }
+  };
+
+  //   console.log(wrongFileType);
 
   return (
     <div className="flex w-full h-full absolute left-0 top-[60px] mb-10 pt-10 lg:pt-20 bg-[#F8F8F8] justify-center">
@@ -105,35 +138,39 @@ const Upload = () => {
           <label className="text-md font-medium">Caption</label>
           <input
             type="text"
-            value=""
-            onChange={() => {}}
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
             className="rounded outline-none text-md border-2 border-gray-200 p-2"
           />
           <label className="text-md font-medium">Choose a Category</label>
           <select
-            onChange={() => {}}
+            onChange={(e) => setCategory(e.target.value)}
             className="outline-none border-2 border-gray-200 text-md capitalize lg:p-4 p-2 rounded cursor-pointer"
           >
             {topics.map((topic) => (
-                <option
-                 key={topic.name}
-                 className="outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
-                 value={topic.name}
-                >
-                    {topic.name}
-                </option>
+              <option
+                key={topic.name}
+                className="outline-none capitalize bg-white text-gray-700 text-md p-2 hover:bg-slate-300"
+                value={topic.name}
+              >
+                {topic.name}
+              </option>
             ))}
           </select>
           <div className="flex gap-6 mt-10">
-            <button onClick={() => {}}
-            type="button"
-            className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none">
-                Discard
+            <button
+              onClick={() => {}}
+              type="button"
+              className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+            >
+              Discard
             </button>
-            <button onClick={() => {}}
-            type="button"
-            className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none">
-                Post
+            <button
+              onClick={handlePost}
+              type="button"
+              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+            >
+              Post
             </button>
           </div>
         </div>
