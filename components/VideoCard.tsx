@@ -36,6 +36,14 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
     }
   };
 
+  // FOR MUTING THE VIDEO AUDIO
+  useEffect(() => {
+    if (videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted])
+  
+
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
       <div>
