@@ -8,6 +8,7 @@ import { SanityAssetDocument } from "@sanity/client";
 import useAuthStore from "../store/authStore";
 import { client } from "../utils/client";
 import { topics } from "../utils/constants";
+import { BASE_URL } from "../utils";
 
 const Upload = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +66,7 @@ const Upload = () => {
         topic: category,
       };
 
-      await axios.post("http://localhost:3000/api/post", document);
+      await axios.post(`${BASE_URL}/api/post`, document);
 
       router.push('/');
     }
@@ -168,7 +169,7 @@ const Upload = () => {
             <button
               onClick={handlePost}
               type="button"
-              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none border-2 border-[#F51997] hover:bg-transparent hover:text-[#F51997]"
             >
               Post
             </button>
