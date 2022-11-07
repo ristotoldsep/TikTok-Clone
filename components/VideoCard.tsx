@@ -75,7 +75,6 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
               </div>
             </Link>
           </div>
-          {post.caption}
         </div>
       </div>
 

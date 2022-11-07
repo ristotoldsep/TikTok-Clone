@@ -32,6 +32,11 @@ const Detail = ({ postDetails } : IProps) => {
   // TO CHECK IF USER IS LOGGED IN
   const { userProfile }: any = useAuthStore();
 
+  // Check if something is in comment field
+  const [comment, setComment] = useState('');
+
+  const [isPostingComment, setIsPostingComment] = useState(false);
+
   // console.log(post);
 
   const onVideoClick = () => {
@@ -60,6 +65,23 @@ const Detail = ({ postDetails } : IProps) => {
       })
 
       setPost({ ...post, likes: data.likes });
+    }
+  }
+
+  const addComment = async (e) => {
+    e.preventDefault();
+
+    if (userProfile && comment) {
+      setIsPostingComment(true);
+
+      const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+        userId: userProfile._id,
+        comment
+      });
+
+      setPost({ ...post, comments: data.comments });
+      setComment('');
+      setIsPostingComment(false);
     }
   }
 
@@ -141,7 +163,7 @@ const Detail = ({ postDetails } : IProps) => {
 
         <p className="px-10 text-lg text-gray-600">{post.caption}</p>
 
-        <div className="mt-10 px-10 ">
+        <div className="px-8 ">
           {userProfile && (
             <LikeButton
               likes={post.likes}
@@ -152,7 +174,11 @@ const Detail = ({ postDetails } : IProps) => {
         </div>
         
         <Comments
-
+          comment={comment}
+          setComment={setComment}
+          addComment={addComment}
+          comments={post.comments}
+          isPostingComment={isPostingComment}
         />
 
 
