@@ -7,18 +7,18 @@ import useAuthStore from '../store/authStore'
 import NoResults from './NoResults'
 
 interface IProps {
-  isPostingComment: Boolean,
-  comment: string,
-  setComment: Dispatch<SetStateAction<string>>,
-  addComment: (e: React.FormEvent) => void,
-  comments: IComment[],
+  isPostingComment: Boolean;
+  comment: string;
+  setComment: Dispatch<SetStateAction<string>>;
+  addComment: (e: React.FormEvent) => void;
+  comments: IComment[];
 }
 
 interface IComment {
-  comment: string,
-  length?: number,
-  _key: string,
-  postedBy: { _ref: string, _id: string },
+  comment: string;
+  length?: number;
+  _key: string;
+  postedBy: { _ref?: string; _id?: string };
 }
 
 
@@ -29,7 +29,7 @@ const Comments = ({
   addComment,
   comments,
  }: IProps ) => {
-  const { userProfile } = useAuthStore();
+  const { userProfile }: any = useAuthStore();
 
   return (
     <div className="mt-3 border-t-2 border-gray-200 pt-4 px-8 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">

@@ -68,7 +68,7 @@ const Detail = ({ postDetails } : IProps) => {
     }
   }
 
-  const addComment = async (e) => {
+  const addComment = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (userProfile && comment) {
@@ -76,14 +76,14 @@ const Detail = ({ postDetails } : IProps) => {
 
       const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
         userId: userProfile._id,
-        comment
+        comment,
       });
 
       setPost({ ...post, comments: data.comments });
-      setComment('');
+      setComment("");
       setIsPostingComment(false);
     }
-  }
+  };
 
   if (!post) return null;
 
