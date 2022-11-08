@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { GoVerified } from "react-icons/go";
 import axios from "axios";
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import VideoCard from "../../components/VideoCard";
 import NoResults from "../../components/NoResults";
@@ -26,8 +26,9 @@ const Search = ({ videos }: { videos: Video[] }) => {
   const isVideos = !isAccounts ? "border-b-2 border-black" : "text-gray-400";
 
   // FILTER FUNCTION TO FIND ACCOUNTS WITH SEARCH TERM (SEARCH by username and biography)
-  const searchedAccounts = allUsers.filter((user: IUser) =>
-    user.userName.toLowerCase().includes(searchTerm.toLowerCase()) || user.biography.toLowerCase().includes(searchTerm.toLowerCase())
+  const searchedAccounts = allUsers.filter(
+    (user: IUser) =>
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   console.log(searchedAccounts);
