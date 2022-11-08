@@ -1,5 +1,7 @@
 # Full stack TikTok Clone app with NextJS + Typescript (Back-end Sanity.io) 📽️
 
+## Check out the LIVE app: https://tik-tok-clone-akfs.vercel.app/
+
 ## Getting Started
 
 First, run the development server:
