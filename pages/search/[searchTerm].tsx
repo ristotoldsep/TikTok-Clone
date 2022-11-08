@@ -1,0 +1,62 @@
+import { useState } from "react";
+import Image from "next/image";
+import { GoVerified } from "react-icons/go";
+import axios from "axios";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import VideoCard from "../../components/VideoCard";
+import NoResults from "../../components/NoResults";
+import { IUser, Video } from "../../types";
+import { BASE_URL } from "../../utils";
+import useAuthStore from "../../store/authStore";
+
+import React from "react";
+
+const Search = ({ videos }: { videos: Video[] }) => {
+
+    const [isAccounts, setIsAccounts] = useState(true);
+
+    const accounts = isAccounts ? "border-b-2 border-black" : "text-gray-400";
+    const isVideos = !isAccounts ? "border-b-2 border-black" : "text-gray-400";
+
+    console.log(videos);
+
+    const router = useRouter()
+
+    const searchWord = router.query.searchTerm;
+
+  return (
+    <div className="w-full">
+      <p>You searched for: &quot;{searchWord}&quot;</p>
+      <div className="flex gap-10 mb-10 mt-4 border-b-2 border-gray-200 bg-white w-full">
+        <p
+          className={`text-xl font-semibold cursor-pointer mt-2 ${accounts}`}
+          onClick={() => setIsAccounts(true)}
+        >
+          Accounts
+        </p>
+        <p
+          className={`text-xl font-semibold cursor-pointer mt-2 ${isVideos}`}
+          onClick={() => setIsAccounts(false)}
+        >
+          Videos
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const getServerSideProps = async ({
+  params: { searchTerm },
+}: {
+  params: { id: string };
+}) => {
+  const res = await axios.get(`${BASE_URL}/api/search/${searchTerm}`);
+
+  return {
+    props: { videos: res.data },
+  };
+};
+
+export default Search;
