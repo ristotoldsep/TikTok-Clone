@@ -80,11 +80,11 @@ const Navbar = () => {
             </Link>
             {/* PROFILE BUTTON */}
             {userProfile.image && (
+              <Link href={`/profile/${userProfile._id}`}>
               <button
                 className="m-0 flex items-center"
                 title={userProfile.userName}
               >
-                <Link href="/">
                   <>
                     <Image
                       width={40}
@@ -94,8 +94,8 @@ const Navbar = () => {
                       alt="profile photo"
                     />
                   </>
-                </Link>
               </button>
+                </Link>
             )}
             {/* LOG OUT BUTTON */}
             <button
