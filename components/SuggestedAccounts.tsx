@@ -14,7 +14,7 @@ const SuggestedAccounts = () => {
     fetchAllUsers();
   }, [fetchAllUsers]);
 
-  console.log(allUsers);
+  // console.log(allUsers);
 
   return (
     <div className="xl:border-b-2 border-gray-200 pb-4">
@@ -38,7 +38,7 @@ const SuggestedAccounts = () => {
                 />
               </div>
               <div className="hidden xl:block">
-                <p className="flex gap-1 items-center text-md font-bold text-primary lowercase">
+                <p className="flex gap-1 items-center text-md font-bold text-primary lowercase" title={user.biography}>
                   {user.userName.replaceAll(' ', '')}
                   <GoVerified className="text-blue-400" />  
                 </p>

@@ -43,7 +43,8 @@ export const postDetailQuery = (postId: string | string[]) => {
     postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
      likes,
     comments[]{
@@ -72,7 +73,8 @@ export const searchPostsQuery = (searchTerm: string | string[]) => {
     postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
 likes,
     comments[]{
@@ -81,7 +83,8 @@ likes,
       postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography,
     },
     }
   }`;
@@ -114,7 +117,8 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
     postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
  likes,
 
@@ -124,7 +128,8 @@ export const userCreatedPostsQuery = (userId: string | string[]) => {
       postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography,
     },
     }
   }`;
@@ -146,7 +151,8 @@ export const userLikedPostsQuery = (userId: string | string[]) => {
     postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
  likes,
 
@@ -156,7 +162,8 @@ export const userLikedPostsQuery = (userId: string | string[]) => {
       postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
     }
   }`;
@@ -178,7 +185,8 @@ export const topicPostsQuery = (topic: string | string[]) => {
     postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
  likes,
 
@@ -188,7 +196,8 @@ export const topicPostsQuery = (topic: string | string[]) => {
       postedBy->{
       _id,
       userName,
-      image
+      image,
+      biography
     },
     }
   }`;

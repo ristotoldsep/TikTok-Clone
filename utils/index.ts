@@ -29,17 +29,18 @@ export const createOrGetUser = async (response: any, addUser: any) => {
 }; */
 
 export const createOrGetUser = async (response: any, addUser: any) => {
-  const decoded: { name: string, picture: string, sub: string } = jwt_decode(response.credential)
+  const decoded: { name: string, picture: string, sub: string, bio: string } = jwt_decode(response.credential)
 
-  console.log(decoded)
+  // console.log(decoded)
 
-  const { name, picture, sub } = decoded;
+  const { name, picture, sub, bio} = decoded;
 
   const user = {
     _id: sub,
     _type: 'user',
     userName: name,
     image: picture,
+    biography: bio,
   }
 
   // ADD OUR USER TO THE STATE!
