@@ -24,11 +24,11 @@ const Search = ({ videos }: { videos: Video[] }) => {
 
     const router = useRouter()
 
-    const searchWord = router.query.searchTerm;
+    const { searchTerm } = router.query;
 
   return (
     <div className="w-full">
-      <p>You searched for: &quot;{searchWord}&quot;</p>
+      <p>You searched for: &quot;{searchTerm}&quot;</p>
       <div className="flex gap-10 mb-10 mt-4 border-b-2 border-gray-200 bg-white w-full">
         <p
           className={`text-xl font-semibold cursor-pointer mt-2 ${accounts}`}
@@ -43,6 +43,19 @@ const Search = ({ videos }: { videos: Video[] }) => {
           Videos
         </p>
       </div>
+      {isAccounts ? (
+        <div>ACCOUNTS</div>
+      ) : (
+        <div className="md:mt-16 flex flex-wrap gap-6 md:justify-start">
+          {videos.length ? (
+            videos.map((video: Video, i: number) => (
+                <VideoCard post={video} key={i} />
+            ))
+          ) : (
+            <NoResults text={`No video results for "${searchTerm}"`} />
+          )}
+        </div>
+      )}
     </div>
   );
 };
@@ -50,7 +63,7 @@ const Search = ({ videos }: { videos: Video[] }) => {
 export const getServerSideProps = async ({
   params: { searchTerm },
 }: {
-  params: { id: string };
+  params: { searchTerm: string };
 }) => {
   const res = await axios.get(`${BASE_URL}/api/search/${searchTerm}`);
 
